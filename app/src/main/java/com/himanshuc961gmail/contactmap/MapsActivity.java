@@ -1,5 +1,7 @@
 package com.himanshuc961gmail.contactmap;
 
+import android.Manifest;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 
@@ -10,9 +12,15 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
+
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
     private GoogleMap mMap;
+    private int requestCodeP = 0;
+    ArrayList<LatLng> latl;
+    private String file_url = "http://www.cs.columbia.edu/~coms6998-8/assignments/homework2/contacts/contacts.txt";
+    private ArrayList<String> download;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +30,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
+        String [] permissions = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.INTERNET, Manifest.permission.WRITE_CONTACTS, Manifest.permission.READ_CONTACTS};
+        ActivityCompat.requestPermissions(this, permissions, requestCodeP);
+        mapFragment.getMapAsync(this);
+        download = new ArrayList<>();
+        //askUrl();
     }
 
 
